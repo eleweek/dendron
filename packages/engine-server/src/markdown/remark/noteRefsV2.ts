@@ -495,7 +495,6 @@ export function convertNoteRefASTV2(
   let { shouldApplyPublishRules } = dendronData;
 
   const { wikiLinkOpts } = compilerOpts;
-  const siteConfig = ConfigUtils.getSite(config);
 
   if (MDUtilsV5.isV5Active(proc)) {
     shouldApplyPublishRules = MDUtilsV5.shouldApplyPublishingRules(proc);
@@ -518,7 +517,8 @@ export function convertNoteRefASTV2(
     prettyRefs = false;
   }
 
-  const duplicateNoteConfig = siteConfig.duplicateNoteBehavior;
+  const publishingConfig = ConfigUtils.getPublishingConfig(config);
+  const duplicateNoteConfig = publishingConfig.duplicateNoteBehavior;
   // process note references.
   let noteRefs: DNoteLoc[] = [];
   if (link.from.fname.endsWith("*")) {
