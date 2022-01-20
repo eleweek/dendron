@@ -356,11 +356,14 @@ export class MDUtilsV5 {
               shouldApplyPublishRules
             );
           }
+          const config = data.config as IntermediateDendronConfig;
+          const publishingConfig = ConfigUtils.getPublishingConfig(config);
+          const assetsPrefix = publishingConfig.assetsPrefix;
 
           const wikiLinkOpts =
             opts.flavor === ProcFlavor.PUBLISHING
               ? {
-                  prefix: (data.config?.site.assetsPrefix || "") + "/notes/",
+                  prefix: (assetsPrefix || "") + "/notes/",
                 }
               : {};
           proc = proc.use(dendronPub, {
@@ -369,7 +372,6 @@ export class MDUtilsV5 {
             wikiLinkOpts,
           });
 
-          const config = data.config as IntermediateDendronConfig;
           const shouldApplyPublishRules =
             MDUtilsV5.shouldApplyPublishingRules(proc);
 
